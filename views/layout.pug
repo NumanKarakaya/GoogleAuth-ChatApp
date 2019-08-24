@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title= title
+    block stylesheets
+      link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+  div(ng-app="chatapp",ng-cloak)
+    block content
+
+    block javascripts
+      script(src="\angular.min.js")
+      script(src="\main.js")
+
+

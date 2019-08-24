@@ -1,0 +1,28 @@
+{
+  "name": "chatapp",
+  "version": "0.0.0",
+  "private": false,
+  "scripts": {
+    "start": "node ./bin/www",
+    "start:dev": "node ./bin/www"
+  },
+  "dependencies": {
+    "angular": "^1.7.8",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^8.1.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pug": "2.0.0-beta11",
+    "yarn": "^1.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "description": "ChatApp",
+  "main": "app.js",
+  "repository": "https://github.com/NumanKarakaya/ChatApp.git",
+  "author": "Numan Karakaya <numan1820@hotmail.com>",
+  "license": "MIT"
+}
