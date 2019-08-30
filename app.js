@@ -3,7 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const dotenv=require('dotenv');
+const passport = require('passport');
+const session = require('express-session');
+const dotenv = require('dotenv');
 dotenv.config();
 
 const indexRouter = require('./routes/index');
@@ -11,7 +13,7 @@ const auth = require('./routes/auth');
 
 
 const app = express();
-const db=require('./helpers/db')();
+const db = require('./helpers/db')();
 
 
 // view engine setup
@@ -26,16 +28,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'angular')));
 app.use(express.static(path.join(__dirname, 'javascripts')));
 
+app.use(session({
+  secret:process.env.SESSION_SECRET_KEY,
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge:14*24*3600000 }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/', indexRouter);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler
-app.use((req, res, next)=> {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use((err, req, res, next)=> {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
