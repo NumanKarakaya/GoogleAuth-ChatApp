@@ -10,10 +10,13 @@ dotenv.config();
 
 const indexRouter = require('./routes/index');
 const auth = require('./routes/auth');
+const chat = require('./routes/chat');
 
 
 const app = express();
 const db = require('./helpers/db')();
+
+const isAuthenticated=require('./middleware/isAuthenticated');
 
 
 // view engine setup
@@ -32,7 +35,7 @@ app.use(session({
   secret:process.env.SESSION_SECRET_KEY,
   resave: true,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge:14*24*3600000 }
+  cookie: {maxAge:14*24*3600000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -40,6 +43,8 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/auth', auth);
+app.use('/chat',isAuthenticated ,chat);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
