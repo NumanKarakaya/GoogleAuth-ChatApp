@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+const redisStore=require('./helpers/redisStore');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -32,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'angular')));
 app.use(express.static(path.join(__dirname, 'javascripts')));
 
 app.use(session({
+  store:redisStore,
   secret:process.env.SESSION_SECRET_KEY,
   resave: true,
   saveUninitialized: true,
