@@ -8,7 +8,7 @@ block content
   div(ng-controller="chatController")
     .wrapper
       .container
-        .left
+        .left  
           .top
             ul.tab
               li.conversations(ng-click="changeTab(1)")
@@ -18,59 +18,25 @@ block content
           .tabArea
             .tab-left(ng-show="activeTab === 1")
               ul.people
-                li.person.active
-                  span.name Dog Woofson
-                  span.preview I&apos;ve forgotten how it felt before
-                |         
-                li.person
-                  span.name Louis CK
-                  span.preview But we&rsquo;re probably gonna need a new carpet.
-                |         
-                li.person
-                  span.name Bo Jackson
-                  span.preview It&rsquo;s not that bad...
-                |         
-                li.person
-                  span.name Michael Jordan
-                  span.preview
-                    | Wasup for the third time like is
-                    | you blind bitch
-                |         
-                li.person
-                  span.name Drake
-                  span.preview howdoyoudoaspace
-                |         
-                li.person
-                  span.name Louis CK
-                  span.preview But we&rsquo;re probably gonna need a new carpet.
-                |         
-                li.person
-                  span.name Bo Jackson
-                  span.preview It&rsquo;s not that bad...
-                |         
-                li.person
-                  span.name Michael Jordan
-                  span.preview
-                    | Wasup for the third time like is
-                    | you blind bitch
-                |         
-                li.person
-                  span.name Drake
-                  span.preview howdoyoudoaspace
+                li.person(
+                  ng-repeat="room in roomList",
+                  ng-click="switchRoom(room)"
+                  )
+                  span.name {{room.name}}
                 |                             
             .tab-right(ng-show="activeTab===2")
               ul.people
-                 li.person
-                    span.name Numan Karakaya
-                    span.preview I was wondering...
-
+                 li.person(ng-repeat="user in onlineList")
+                    img(ng-src="{{user.meta.profilePhotoUrl}}")
+                    span.name {{user.meta.name}} {{user.meta.surname}}
+                    span.preview &nbsp;
           .bottom
-            button New Group
+            button(ng-click="newRoom()") New Room
         |     
-        .right
+        .right(ng-show="chatClicked")
           .top
             span
-              span.name Dog Woofson
+              span.name {{chatName}}
           |       
           .chat.active-chat
             .bubble.you
@@ -94,8 +60,9 @@ block content
               | I&apos;ve forgotten how it felt before
           |       
           .write
+           form(ng-submit="newMessage()")
             input(type='text')
-            a.write-link.send(href='javascript:;')
+            a.write-link.send(ng-submit="newMessage()")
 
 append javascripts
   script(src='http://localhost:3000/socket.io/socket.io.js')
