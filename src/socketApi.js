@@ -40,6 +40,8 @@ io.on('connection',socket=>{
         io.emit('onlineList',users);
     }); 
     
+    //Mehmet hocam problem burada olabilirmi çünkü çift basılan veriye farklı idler veriliyo.
+
     socket.on('newRoom',roomName=>{
         Rooms.upsert(roomName);
         Rooms.list(rooms=>{

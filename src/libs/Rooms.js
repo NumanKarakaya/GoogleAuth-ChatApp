@@ -7,6 +7,8 @@ function Rooms() {
 
 module.exports = new Rooms();
 
+//Mehmet hocam problem burada olabilirmi?
+
 Rooms.prototype.upsert = function (name) {
 	const newId = shortid.generate();
 
